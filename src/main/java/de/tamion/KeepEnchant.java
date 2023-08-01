@@ -1,5 +1,6 @@
 package de.tamion;
 
+import de.tamion.commands.KeepEnchantCommand;
 import de.tamion.listeners.InventoryListeners;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
@@ -12,8 +13,11 @@ public final class KeepEnchant extends JavaPlugin {
     public void onEnable() {
         PluginManager pluginManager = Bukkit.getPluginManager();
         plugin = this;
+        saveDefaultConfig();
 
         pluginManager.registerEvents(new InventoryListeners(), this);
+
+        getCommand("keepenchant").setExecutor(new KeepEnchantCommand());
 
         Metrics metrics = new Metrics(this, 19000);
     }
