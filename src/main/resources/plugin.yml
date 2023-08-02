@@ -2,6 +2,7 @@ name: KeepEnchant
 version: '${project.version}'
 main: de.tamion.KeepEnchant
 load: STARTUP
+api-version: 1.14
 authors: [Tamion]
 description: Allows you to keep the enchantment when using the grindstone
 
