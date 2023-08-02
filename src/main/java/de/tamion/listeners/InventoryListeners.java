@@ -51,7 +51,7 @@ public class InventoryListeners implements Listener {
                 }
                 return;
             }
-            Inventory playinv = Bukkit.createInventory(null, 9*3);
+            Inventory playinv = Bukkit.createInventory(null, InventoryType.PLAYER);
             playinv.setContents(p.getInventory().getContents());
             playinv.addItem(book);
             if(playinv.firstEmpty() == -1) {
@@ -59,6 +59,8 @@ public class InventoryListeners implements Listener {
                 return;
             }
             p.getInventory().addItem(book);
-        } catch (Exception ignored) {}
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 }
