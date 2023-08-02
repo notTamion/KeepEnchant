@@ -39,7 +39,7 @@ public class KeepEnchantCommand implements CommandExecutor {
                 }
                 return false;
             case 1:
-                switch (args[0]) {
+                switch (args[0].toLowerCase()) {
                     case "toggledefault":
                         if(!sender.hasPermission("keepenchant.toggledefault")) {
                             sender.sendMessage("You aren't allowed to execute this command!");
