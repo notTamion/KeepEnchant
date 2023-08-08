@@ -5,5 +5,6 @@ When you disenchant an item in the Grindstone You will get an enchanted book wit
 ### Commands
 - Command - Description - Permission
 - /keepenchant - Toggles KeepEnchant for you - keepenchant.toggle
-- /keepenchant PlayerName - Toggles KeepEnchant for the player - keepenchant.toggleothers
-- /keepenchant toggledefault - Toggles the default value. Default: true - keepenchant.toggledefault
+- /keepenchant PlayerName - Toggles KeepEnchant for the player - keepenchant.toggle.others
+- /keepenchant toggle default - Toggles the default value. Default: true - keepenchant.toggle.default
+- /keepenchant toggle requirebook - Toggles if a book is required to keep the enchantments Default: true - keepenchant.toggle.requirebook

@@ -18,8 +18,9 @@ public class InventoryListeners implements Listener {
     public void onInventoryClick(InventoryClickEvent e) {
         Player p = (Player) e.getWhoClicked();
         FileConfiguration config = KeepEnchant.getPlugin().getConfig();
+
         if(!config.contains("player." + p.getName())) {
-            if(!config.contains("default") || !config.getBoolean("default")) {
+            if(!config.getBoolean("default")) {
                 return;
             }
         } else if(!config.getBoolean("player." + p.getName())) {
@@ -28,6 +29,13 @@ public class InventoryListeners implements Listener {
         try {
             if (!e.getInventory().getType().equals(InventoryType.GRINDSTONE) || e.getCurrentItem() == null || e.getCurrentItem().getType().isAir() || e.getSlot() != 2) {
                 return;
+            }
+            if(config.getBoolean("requirebook")) {
+                if(!p.getInventory().contains(Material.BOOK)) {
+                    return;
+                }
+                ItemStack books = p.getInventory().getItem(p.getInventory().first(Material.BOOK));
+                books.setAmount(books.getAmount()-1);
             }
             ItemStack book = new ItemStack(Material.ENCHANTED_BOOK);
             EnchantmentStorageMeta bookmeta = (EnchantmentStorageMeta) book.getItemMeta();

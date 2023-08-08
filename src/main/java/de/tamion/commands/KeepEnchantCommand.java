@@ -39,45 +39,62 @@ public class KeepEnchantCommand implements CommandExecutor {
                 }
                 return false;
             case 1:
+                Player t = Bukkit.getPlayer(args[0]);
+                if (t == null) {
+                    sender.sendMessage("Invalid arguments");
+                    return false;
+                }
+                if (!sender.hasPermission("keepenchant.toggle.others")) {
+                    sender.sendMessage("You aren't allowed to execute this command!");
+                    return false;
+                }
+                newstate = false;
+                if (config.contains("player." + t.getName())) {
+                    newstate = !config.getBoolean("player." + t.getName());
+                } else {
+                    newstate = !config.getBoolean("default");
+                }
+                config.set("player." + t.getName(), newstate);
+                KeepEnchant.getPlugin().saveConfig();
+                if (newstate) {
+                    t.sendMessage("You will now keep your enchantments when using the grindstone");
+                    sender.sendMessage(t.getName() + " will now keep their enchantments when using the grindstone");
+                } else {
+                    t.sendMessage("You will no longer keep your enchantments when using the grindstone");
+                    sender.sendMessage(t.getName() + " will no longer keep their enchantments when using the grindstone");
+                }
+            case 2:
                 switch (args[0].toLowerCase()) {
-                    case "toggledefault":
-                        if(!sender.hasPermission("keepenchant.toggledefault")) {
-                            sender.sendMessage("You aren't allowed to execute this command!");
-                            return false;
-                        }
-                        newstate = !config.getBoolean("default");
-                        config.set("default", newstate);
-                        KeepEnchant.getPlugin().saveConfig();
-                        if(newstate) {
-                            sender.sendMessage("The default is now set to keep enchantments when using the grindstone");
-                        } else {
-                            sender.sendMessage("The default is now set to not keep enchantments when using the grindstone");
-                        }
-                        return false;
-                    default:
-                        Player t = Bukkit.getPlayer(args[0]);
-                        if(t == null) {
-                            sender.sendMessage("Invalid arguments");
-                            return false;
-                        }
-                        if(!sender.hasPermission("keepenchant.toggleothers")) {
-                            sender.sendMessage("You aren't allowed to execute this command!");
-                            return false;
-                        }
-                        newstate = false;
-                        if(config.contains("player." + t.getName())) {
-                            newstate = !config.getBoolean("player." + t.getName());
-                        } else {
-                            newstate = !config.getBoolean("default");
-                        }
-                        config.set("player." + t.getName(), newstate);
-                        KeepEnchant.getPlugin().saveConfig();
-                        if(newstate) {
-                            t.sendMessage("You will now keep your enchantments when using the grindstone");
-                            sender.sendMessage(t.getName() + " will now keep their enchantments when using the grindstone");
-                        } else {
-                            t.sendMessage("You will no longer keep your enchantments when using the grindstone");
-                            sender.sendMessage(t.getName() + " will no longer keep their enchantments when using the grindstone");
+                    case "toggle":
+                        switch (args[1].toLowerCase()) {
+                            case "default":
+                                if(!sender.hasPermission("keepenchant.toggle.default")) {
+                                    sender.sendMessage("You aren't allowed to execute this command!");
+                                    return false;
+                                }
+                                newstate = !config.getBoolean("default");
+                                config.set("default", newstate);
+                                KeepEnchant.getPlugin().saveConfig();
+                                if(newstate) {
+                                    sender.sendMessage("The default is now set to keep enchantments when using the grindstone");
+                                } else {
+                                    sender.sendMessage("The default is now set to not keep enchantments when using the grindstone");
+                                }
+                                return false;
+                            case "requirebook":
+                                if(!sender.hasPermission("keepenchant.toggle.requirebook")) {
+                                    sender.sendMessage("You aren't allowed to execute this command!");
+                                    return false;
+                                }
+                                newstate = !config.getBoolean("requirebook");
+                                config.set("requirebook", newstate);
+                                KeepEnchant.getPlugin().saveConfig();
+                                if(newstate) {
+                                    sender.sendMessage("You will now require a book to keep the enchants");
+                                } else {
+                                    sender.sendMessage("You will no longer require a book to keep the enchants");
+                                }
+                                return false;
                         }
                 }
         }
