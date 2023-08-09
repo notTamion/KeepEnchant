@@ -16,8 +16,8 @@ import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 public class InventoryListeners implements Listener {
     @EventHandler
     public void onInventoryClick(InventoryClickEvent e) {
-        Player p = (Player) e.getWhoClicked();
         FileConfiguration config = KeepEnchant.getPlugin().getConfig();
+        Player p = (Player) e.getWhoClicked();
 
         if(!config.contains("player." + p.getName())) {
             if(!config.getBoolean("default")) {
@@ -59,10 +59,10 @@ public class InventoryListeners implements Listener {
                 }
                 return;
             }
-            Inventory playinv = Bukkit.createInventory(null, InventoryType.PLAYER);
-            playinv.setContents(p.getInventory().getContents());
+            Inventory playinv = Bukkit.createInventory(null,  4*9);
+            playinv.setContents(p.getInventory().getStorageContents());
             playinv.addItem(book);
-            if(playinv.firstEmpty() == -1) {
+            if(playinv.firstEmpty() == -1 && e.isShiftClick()) {
                 p.getWorld().dropItem(p.getLocation(), book);
                 return;
             }
