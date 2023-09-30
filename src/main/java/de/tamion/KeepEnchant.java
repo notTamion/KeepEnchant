@@ -14,6 +14,8 @@ public final class KeepEnchant extends JavaPlugin {
         plugin = this;
 
         pluginManager.registerEvents(new InventoryListeners(), this);
+
+        Metrics metrics = new Metrics(this, 19000);
     }
 
     public static KeepEnchant getPlugin() {
